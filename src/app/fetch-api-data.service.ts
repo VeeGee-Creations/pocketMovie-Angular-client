@@ -81,16 +81,16 @@ export class UserRegistrationService {
   }
 
   // making the api call for the favorites push endpoint
-  public addFavorite(movieTitle: string): Observable<any> {
-    return this.http.post(`${apiURL}/users/favorites/push/${movieTitle}`, authHeaders).pipe(
+  public addFavorite(id: string): Observable<any> {
+    return this.http.post(`${apiURL}/users/favorites/push/${id}`, {}, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
       catchError(this.handleError)
     );
   }
 
   // making the api call for the favorites pull endpoint
-  public removeFavorite(movieTitle: string): Observable<any> {
-    return this.http.post(`${apiURL}/users/favorites/pull/${movieTitle}`, authHeaders).pipe(
+  public removeFavorite(id: string): Observable<any> {
+    return this.http.post(`${apiURL}/users/favorites/pull/${id}`, {}, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
       catchError(this.handleError)
     );

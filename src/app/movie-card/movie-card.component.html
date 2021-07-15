@@ -42,7 +42,14 @@
             >
                 Synopsis
             </button>
-            <mat-icon style="margin-left: '135px'">favorite_border</mat-icon>
+            <ng-container *ngIf="!checkFavorite(movie.Title); then border; else fill;">
+            </ng-container>
+            <ng-template #border>
+                <mat-icon (click)="addFavorite(movie._id)" style="margin-left: '135px'; cursor: 'pointer';">favorite_border</mat-icon>
+            </ng-template>
+            <ng-template #fill>
+                <mat-icon (click)="removeFavorite(movie._id)" style="margin-left: '135px'; cursor: 'pointer'; color: '#FF0000';">favorite</mat-icon>
+            </ng-template>
         </mat-card-actions>
     </mat-card>
 </div>

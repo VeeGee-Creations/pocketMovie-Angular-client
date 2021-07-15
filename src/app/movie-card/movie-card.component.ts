@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UserRegistrationService } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DirectorDetailsComponent } from '../director-details/director-details.component';
@@ -12,6 +12,7 @@ import { SynopsisDetailsComponent } from '../synopsis-details/synopsis-details.c
 })
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
+  favorites: any[] = [];
   constructor(
     public fetchApiData: UserRegistrationService,
     public dialog: MatDialog
@@ -19,14 +20,26 @@ export class MovieCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMovies();
+    this.getFavorites();
   }
 
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((response: any) => {
       this.movies = response;
-      console.log(this.movies);
       return this.movies;
     });
+  }
+  
+
+  getFavorites(): void {
+    this.fetchApiData.getProfile().subscribe((response: any) => {
+      this.favorites = response.Favorites;
+      return this.favorites;
+    });
+  }
+
+  checkFavorite(movie: string): boolean {
+    return this.favorites.some( favorite => favorite.Title === movie)
   }
   
   openDirectorDetailDialog(name: string, bio: string): void {
@@ -47,6 +60,18 @@ export class MovieCardComponent implements OnInit {
     this.dialog.open(SynopsisDetailsComponent, {
       width: 'max-content',
       data: { movieTitle: title, movieSynopsis: synopsis }
+    });
+  }
+
+  addFavorite(movie: string): void {
+    this.fetchApiData.addFavorite(movie).subscribe((response: any) => {
+      this.getFavorites();
+    });
+  }
+
+  removeFavorite(movie: string): void {
+    this.fetchApiData.removeFavorite(movie).subscribe((response: any) => {
+      this.getFavorites();
     });
   }
 
