@@ -20,6 +20,9 @@ import { MovieCardComponent } from './movie-card/movie-card.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { PluckPipe } from './pluck.pipe';
+import { DirectorDetailsComponent } from './director-details/director-details.component';
+import { GenreDetailsComponent } from './genre-details/genre-details.component';
+import { SynopsisDetailsComponent } from './synopsis-details/synopsis-details.component';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
@@ -34,7 +37,10 @@ const appRoutes: Routes = [
     UserLoginFormComponent,
     MovieCardComponent,
     WelcomePageComponent,
-    PluckPipe
+    PluckPipe,
+    DirectorDetailsComponent,
+    GenreDetailsComponent,
+    SynopsisDetailsComponent
   ],
   imports: [
     BrowserModule,
