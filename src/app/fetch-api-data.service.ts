@@ -5,9 +5,18 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 
-//Declaring the api url that wil provide data for the client app
+/**
+ * base API URL
+ * @constant
+ * @type {string}
+ * @default
+ */
 const apiURL = 'https://pocket-movies.herokuapp.com';
+
+// reference user authorization token from local storage
 const token = localStorage.getItem('token');
+
+// authorization header for API calls
 const authHeaders = {headers: new HttpHeaders(
   {
     Authorization: `Bearer ${token}`
@@ -23,15 +32,24 @@ export class UserRegistrationService {
   // This will provide HttpClient to the entire class, making it available via this.http
   constructor(private http: HttpClient) {
   }
-  // Making the api call for the user registration endpoint
-  public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
+  
+  /**
+   * makes post call to API users endpoint
+   * @param {object} userDetails 
+   * @returns API response
+   */
+  public userRegistration(userDetails: object): Observable<any> {
     return this.http.post(`${apiURL}/users`, userDetails).pipe(
       catchError(this.handleError)
     );
   }
 
-  // making the api call for the user login endpoint
+  /**
+   * makes post call to API login endpoint
+   * @param {string} username
+   * @param {string} password
+   * @returns API response
+   */
   public userLogin(username: string, password: string): Observable<any> {
     return this.http.post(`${apiURL}/login`, {}, {params:{
       Username: username,
@@ -41,7 +59,10 @@ export class UserRegistrationService {
     );
   }
 
-  // making the api call for the movies endpoint
+  /**
+   * makes get call to API movies endpoint
+   * @returns all movies
+   */
   public getAllMovies(): Observable<any> {
     return this.http.get(`${apiURL}/movies`, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
@@ -49,6 +70,11 @@ export class UserRegistrationService {
     );
   }
 
+  /**
+   * makes get call to API movies endpoint
+   * @param {string} movieTitle 
+   * @returns single movie
+   */
   public getMovieTitle(movieTitle: string): Observable<any> {
     return this.http.get(`${apiURL}/movies/${movieTitle}`, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
@@ -56,7 +82,11 @@ export class UserRegistrationService {
     );
   }
 
-  // making the api call for the directors endpoint
+  /**
+   * makes get call to API directors endpoint
+   * @param {string} directorName 
+   * @returns single director
+   */
   public getDirector(directorName: string): Observable<any> {
     return this.http.get(`${apiURL}/directors/${directorName}`, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
@@ -64,7 +94,10 @@ export class UserRegistrationService {
     );
   }
 
-  // making the api call for the genres endpoint
+  /**
+   * makes get call to API genres endpoint
+   * @returns all genres
+   */
   public getGenres(): Observable<any> {
     return this.http.get(`${apiURL}/genres`, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
@@ -72,7 +105,10 @@ export class UserRegistrationService {
     );
   }
 
-  // making the api call for the users profile endpoint
+  /**
+   * makes get call to API users/profile endpoint
+   * @returns user information
+   */
   public getProfile(): Observable<any> {
     return this.http.get(`${apiURL}/users/profile`, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
@@ -80,38 +116,61 @@ export class UserRegistrationService {
     );
   }
 
-  // making the api call for the favorites push endpoint
-  public addFavorite(id: string): Observable<any> {
-    return this.http.post(`${apiURL}/users/favorites/push/${id}`, {}, authHeaders).pipe(
+  /**
+   * Makes post call to users/favorites/push endpoint
+   * adds movie by ID to users favorites list
+   * @param {string} movieId 
+   * @returns user information
+   */
+  public addFavorite(movieId: string): Observable<any> {
+    return this.http.post(`${apiURL}/users/favorites/push/${movieId}`, {}, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
       catchError(this.handleError)
     );
   }
 
-  // making the api call for the favorites pull endpoint
-  public removeFavorite(id: string): Observable<any> {
-    return this.http.post(`${apiURL}/users/favorites/pull/${id}`, {}, authHeaders).pipe(
+  /**
+   * Makes post call to users/favorites/pull endpoint
+   * removes movie by ID from users favorites list
+   * @param {string} movieId 
+   * @returns user information
+   */
+  public removeFavorite(movieId: string): Observable<any> {
+    return this.http.post(`${apiURL}/users/favorites/pull/${movieId}`, {}, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
       catchError(this.handleError)
     );
   }
 
-  // making the api call for the edit profile endpoint
-  public editProfile(userDetails: any): Observable<any> {
+  /**
+   * makes put call to API users endpoint
+   * @param {object} userDetails 
+   * @returns user information
+   */
+  public editProfile(userDetails: object): Observable<any> {
     return this.http.put(`${apiURL}/users/`, authHeaders, userDetails).pipe(
       map<any, any>(this.extractResponseData),
       catchError(this.handleError)
     );
   }
 
-  // making the api call for the delete profile endpoint
-  public deleteProfile(userDetails: any): Observable<any> {
+  /**
+   * makes delete call to API users endpoint
+   * @param {object} userDetails 
+   * @returns API response
+   */
+  public deleteProfile(userDetails: object): Observable<any> {
     return this.http.delete(`${apiURL}/users/`, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
       catchError(this.handleError)
     );
   }
 
+  /**
+   * handles http errors
+   * @param {httpErrorResponse} error 
+   * @returns  error message
+   */
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occured:', error.error.message);
@@ -126,7 +185,12 @@ export class UserRegistrationService {
     );
   }
 
-  private extractResponseData(res: Response): any {
+  /**
+   * extracts response body
+   * @param {Response} res 
+   * @returns {object} response body
+   */
+  private extractResponseData(res: Response): object {
     const body = res;
     return body || {};
   }

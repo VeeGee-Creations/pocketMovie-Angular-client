@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class UserLoginFormComponent implements OnInit {
 
+  // holds lognin input data
   @Input() userData = { Username: '', Password: ''};
 
   constructor(
@@ -26,6 +27,7 @@ export class UserLoginFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // sends userData to API for login confirmation
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData.Username, this.userData.Password).subscribe((result: any) => {
       this.dialogRef.close(); // Close modal on success

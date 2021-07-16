@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UserRegistrationService } from '../fetch-api-data.service';
 
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-registration-form',
@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UserRegistrationFormComponent implements OnInit {
 
+  // holds registration input data
   @Input() userData = { Username: '', Password: '', Email: '', Birthday: ''};
 
   constructor(
@@ -24,10 +25,10 @@ export class UserRegistrationFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // sends userData to API for acount registration
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe((result: any) => {
-      // Logic for a successful user registration goes here (To be implemented)
-      this.dialogRef.close(); // Close modal on success
+      this.dialogRef.close();
       console.log(result);
       this.snackBar.open(result, 'OK', {
         duration: 2000
