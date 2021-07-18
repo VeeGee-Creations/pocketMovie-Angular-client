@@ -148,7 +148,7 @@ export class UserRegistrationService {
    * @returns user information
    */
   public editProfile(userDetails: object): Observable<any> {
-    return this.http.put(`${apiURL}/users/`, authHeaders, userDetails).pipe(
+    return this.http.put(`${apiURL}/users/`, userDetails, authHeaders).pipe(
       map<any, any>(this.extractResponseData),
       catchError(this.handleError)
     );

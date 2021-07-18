@@ -15,6 +15,8 @@ export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   // holds user favorites list from api
   favorites: any[] = [];
+  // holds featured movies
+  featured: any[] = [];
   constructor(
     public fetchApiData: UserRegistrationService,
     public dialog: MatDialog
@@ -30,7 +32,8 @@ export class MovieCardComponent implements OnInit {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((response: any) => {
       this.movies = response;
-      return this.movies;
+      this.featured = response.filter((movies: any) => movies.Featured);
+      return this.movies, this.featured;
     });
   }
   

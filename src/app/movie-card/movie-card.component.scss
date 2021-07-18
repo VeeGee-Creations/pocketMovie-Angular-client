@@ -1,0 +1,40 @@
+
+.card-container {
+    display: flex;
+    overflow-x: auto;
+}
+
+.card-container::-webkit-scrollbar {
+    display: none;
+}
+
+h1 {
+    margin: 20px 0 0 0;
+    font-weight: bold;
+}
+
+mat-card {
+    flex: 1 1 auto;
+    min-width: 270px;
+    max-width: 270px; 
+    margin: 5px;
+}
+
+mat-card-title {
+    max-width: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+mat-card-subtitle > .array-button, .mat-card-actions:not(.mat-card-actions-align-end) .mat-button:first-child, .mat-card-actions:not(.mat-card-actions-align-end) .mat-raised-button:first-child, .mat-card-actions:not(.mat-card-actions-align-end) .mat-stroked-button:first-child {
+    padding: 0;
+    margin: 0 5px 0 0;
+    min-width: max-content;
+}

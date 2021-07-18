@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
@@ -22,6 +23,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { DirectorDetailsComponent } from './director-details/director-details.component';
 import { GenreDetailsComponent } from './genre-details/genre-details.component';
 import { SynopsisDetailsComponent } from './synopsis-details/synopsis-details.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { ProfileComponentComponent } from './profile-component/profile-component.component';
 
 /**
  * contains routing paths
@@ -44,7 +47,9 @@ const appRoutes: Routes = [
     WelcomePageComponent,
     DirectorDetailsComponent,
     GenreDetailsComponent,
-    SynopsisDetailsComponent
+    SynopsisDetailsComponent,
+    NavBarComponent,
+    ProfileComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +63,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatToolbarModule,
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],

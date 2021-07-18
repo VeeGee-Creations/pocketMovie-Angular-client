@@ -1,0 +1,19 @@
+<mat-toolbar style="position: sticky; width: 100%;" color="primary">
+    <span>Pocket Movies</span>
+    <div style="margin-left: auto;">
+        <button
+            style="margin-right: 10px"
+            mat-button
+            (click)="openProfileDialog()"
+        >
+            {{user}}
+        </button>
+        <button
+            mat-raised-button
+            (click)="onLogout()"
+        >
+            Logout
+        </button>
+    </div>
+
+</mat-toolbar>

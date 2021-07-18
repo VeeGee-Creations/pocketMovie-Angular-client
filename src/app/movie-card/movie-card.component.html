@@ -1,37 +1,142 @@
-<div style="display: flex;">
-    <mat-card *ngFor="let movie of movies;" style="flex: 1 1 auto; min-width: '270px';">
+<app-nav-bar></app-nav-bar>
+
+<h1>Featured</h1>
+
+<div class="card-container">
+    <mat-card *ngFor="let movie of featured;">
         <mat-card-header>
-            <mat-card-title
-            style="
-            max-width: '270px';
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;"
-            >
+            <mat-card-title>
                 {{movie.Title}}
             </mat-card-title>
             <mat-card-subtitle>Directed by: 
                 <button
+                    class="array-button"
                     *ngFor="let director of movie.Directors; let isLast=last"
                     mat-button
                     color="primary"
-                    style="padding: 0; margin: '2px'; min-width: max-content;"
                     (click)="openDirectorDetailDialog(director.Name, director.Bio)"
                 >
                     {{director.Name}}{{isLast ? '' : ', '}}
                 </button>
             </mat-card-subtitle>
         </mat-card-header>
-        <div style="display: flex;  align-items: center; justify-content: center;">
+        <div class="image-container">
             <img src={{movie.ImageURL}} alt= {{movie.Title}} style="height: '345px';" />
         </div>
         <mat-card-actions>
             <mat-card-subtitle>Genres: 
             <button
                 *ngFor="let genre of movie.Genres; let isLast=last"
+                class="array-button"
                 mat-button
                 color="primary"
-                style="padding: 0; margin: '2px'; min-width: max-content;"
+                (click)="openGenreDetailDialog(genre.Name, genre.Description)"
+            >
+                {{genre.Name}}{{isLast ? '' : ', '}}
+            </button>
+            </mat-card-subtitle>
+            <button
+                mat-button
+                color="primary"
+                (click)="openSynopsisDetailDialog(movie.Title, movie.Synopsis)"
+            >
+                Synopsis
+            </button>
+            <ng-container *ngIf="!checkFavorite(movie.Title); then border; else fill;">
+            </ng-container>
+            <ng-template #border>
+                <mat-icon (click)="addFavorite(movie._id)" style="margin-left: '135px'; cursor: 'pointer';">favorite_border</mat-icon>
+            </ng-template>
+            <ng-template #fill>
+                <mat-icon (click)="removeFavorite(movie._id)" style="margin-left: '135px'; cursor: 'pointer'; color: '#FF0000';">favorite</mat-icon>
+            </ng-template>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<h1>Favorites</h1>
+<div class="card-container">
+    <mat-card *ngFor="let movie of favorites;">
+        <mat-card-header>
+            <mat-card-title>
+                {{movie.Title}}
+            </mat-card-title>
+            <mat-card-subtitle>Directed by: 
+                <button
+                    class="array-button"
+                    *ngFor="let director of movie.Directors; let isLast=last"
+                    mat-button
+                    color="primary"
+                    (click)="openDirectorDetailDialog(director.Name, director.Bio)"
+                >
+                    {{director.Name}}{{isLast ? '' : ', '}}
+                </button>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <div class="image-container">
+            <img src={{movie.ImageURL}} alt= {{movie.Title}} style="height: '345px';" />
+        </div>
+        <mat-card-actions>
+            <mat-card-subtitle>Genres: 
+            <button
+                *ngFor="let genre of movie.Genres; let isLast=last"
+                class="array-button"
+                mat-button
+                color="primary"
+                (click)="openGenreDetailDialog(genre.Name, genre.Description)"
+            >
+                {{genre.Name}}{{isLast ? '' : ', '}}
+            </button>
+            </mat-card-subtitle>
+            <button
+                mat-button
+                color="primary"
+                (click)="openSynopsisDetailDialog(movie.Title, movie.Synopsis)"
+            >
+                Synopsis
+            </button>
+            <ng-container *ngIf="!checkFavorite(movie.Title); then border; else fill;">
+            </ng-container>
+            <ng-template #border>
+                <mat-icon (click)="addFavorite(movie._id)" style="margin-left: '135px'; cursor: 'pointer';">favorite_border</mat-icon>
+            </ng-template>
+            <ng-template #fill>
+                <mat-icon (click)="removeFavorite(movie._id)" style="margin-left: '135px'; cursor: 'pointer'; color: '#FF0000';">favorite</mat-icon>
+            </ng-template>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<h1>Movies</h1>
+
+<div class="card-container">
+    <mat-card *ngFor="let movie of movies;">
+        <mat-card-header>
+            <mat-card-title>
+                {{movie.Title}}
+            </mat-card-title>
+            <mat-card-subtitle>Directed by: 
+                <button
+                    *ngFor="let director of movie.Directors; let isLast=last"
+                    class="array-button"
+                    mat-button
+                    color="primary"
+                    (click)="openDirectorDetailDialog(director.Name, director.Bio)"
+                >
+                    {{director.Name}}{{isLast ? '' : ', '}}
+                </button>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <div class="image-container">
+            <img src={{movie.ImageURL}} alt= {{movie.Title}} style="height: '345px';" />
+        </div>
+        <mat-card-actions>
+            <mat-card-subtitle>Genres: 
+            <button
+                *ngFor="let genre of movie.Genres; let isLast=last"
+                class="array-button"
+                mat-button
+                color="primary"
                 (click)="openGenreDetailDialog(genre.Name, genre.Description)"
             >
                 {{genre.Name}}{{isLast ? '' : ', '}}

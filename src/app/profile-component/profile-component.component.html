@@ -1,0 +1,87 @@
+<ng-container *ngIf="edit; then e; else v;"></ng-container>
+<ng-template #v>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Profile</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+            Username: {{profile.Username}}
+    </mat-card-content>
+    <mat-card-content>
+        Email:  {{profile.Email}}
+    </mat-card-content>
+    <mat-card-content>
+        Birthday:  {{profile.Birthday}}
+    </mat-card-content>
+    <mat-card-actions>
+        <button 
+            mat-raised-button
+            color="primary"
+            (click)="editToggle()"
+        >
+            Edit
+        </button>
+    </mat-card-actions>
+</mat-card>
+</ng-template>
+
+<ng-template #e>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Profile</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form>
+            <mat-form-field>
+                <input
+                    matInput
+                    [(ngModel)]="profileData.Username"
+                    placeholder="Username"
+                    type="text"
+                    name="Username"
+                    required
+                >
+            </mat-form-field>
+            <mat-form-field>
+                <input
+                    matInput
+                    [(ngModel)]="profileData.Email"
+                    placeholder="Email"
+                    type="email"
+                    name="Email"
+                    required
+                >
+            </mat-form-field>
+            <mat-form-field>
+                <input
+                    matInput
+                    [(ngModel)]="profileData.Birthday"
+                    type="date"
+                    placeholder="Birthday"
+                    name="Birthday"
+                    required
+                >
+            </mat-form-field>
+            <mat-form-field>
+                <input
+                    matInput
+                    [(ngModel)]="profileData.Password"
+                    type="password"
+                    placeholder="Password"
+                    name="Password"
+                    required
+                >
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="updateProfile()"
+        >
+            Submit
+        </button>
+    </mat-card-actions>
+</mat-card>
+</ng-template>
